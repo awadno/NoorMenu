@@ -24,26 +24,37 @@ import com.google.android.gms.common.api.GoogleApiClient;
 
 import java.util.Calendar;
 
+import static com.awad.noor.noormenu.R.layout.activity_main;
+
 public class MainActivity extends AppCompatActivity implements DialogInterface.OnClickListener, OnClickListener {
 
     private Button btnDate;
     private TextView tvShowDate;
     private Button btnTime;
     private TextView tvShowTime;
-
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+    private GoogleApiClient client;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(activity_main);
+
         btnDate = (Button) findViewById(R.id.btndate);
         tvShowDate = (TextView) findViewById(R.id.tvShowDate);
+        btnDate.setOnClickListener(this);
         tvShowTime = (TextView) findViewById(R.id.tvshowTime);
         btnTime = (Button) findViewById(R.id.btnTime);
+        btnTime.setOnClickListener(this);
 
 
-
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
 
     @Override
@@ -111,8 +122,6 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
 
             DatePickerDialog datePickerDialog = new DatePickerDialog(this, dateListener, year, month, day);
             datePickerDialog.show();
-
-
         }
         if (v == btnTime) {
             Calendar c1 = Calendar.getInstance();
@@ -122,15 +131,18 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
             TimePickerDialog.OnTimeSetListener timeListener = new TimePickerDialog.OnTimeSetListener() {
                 @Override
                 public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                    TextViewTime.setText(hour + ":" + minute);
+                    tvShowTime.setText(hour + ":" + minute);
                 }
 
 
             };
+            TimePickerDialog timePickerDialog = new TimePickerDialog(this, timeListener, hour, minute, true);
+            timePickerDialog.show();
         }
-
     }
+
 }
+
 
 
 
